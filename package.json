@@ -1,0 +1,24 @@
+{
+  "name": "hizuvi.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "compile-watch": "tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hizuvi/hizuvi.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hizuvi/hizuvi.github.io/issues"
+  },
+  "homepage": "https://github.com/Hizuvi/hizuvi.github.io#readme",
+  "dependencies": {
+    "@types/babylonjs": "^2.4.1",
+    "typescript": "^4.3.5"
+  }
+}
