@@ -1,0 +1,12 @@
+version: '2'
+services:
+  # game:
+  #   build: ./containers/game
+  #   command: npm run dev
+
+  client:
+    image: nginx
+    ports:
+        - 8000:80
+    volumes:
+        - ./containers/game/dist:/usr/share/nginx/html
