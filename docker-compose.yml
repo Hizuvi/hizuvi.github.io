@@ -1,12 +1,31 @@
-version: '2'
 services:
-  # game:
-  #   build: ./containers/game
-  #   command: npm run dev
+  api:
+    build:
+      context: ./containers/api
+      dockerfile: Dockerfile
+      target: base
+    volumes:
+      - ./containers/api/src:/usr/app/src
+      - ./containers/api/nodemon.json:/usr/app/nodemon.json
+    ports:
+      - 4000:4000
+    command: npm run dev
 
-  client:
+  server:
     image: nginx
     ports:
         - 8000:80
     volumes:
         - ./containers/game/dist:/usr/share/nginx/html
+
+  mongo:
+    image: mongo
+    environment: 
+      - MONGO_INITDB_DATABASE=database #database name
+      - MONGO_INITDB_ROOT_USERNAME=user
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - ./containers/db/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
+      - ./containers/db/mongo-volume:/data/db
+    ports:
+      - "27017-27019:27017-27019"
