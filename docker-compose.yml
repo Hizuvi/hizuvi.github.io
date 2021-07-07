@@ -9,6 +9,8 @@ services:
       - ./containers/api/nodemon.json:/usr/app/nodemon.json
     ports:
       - 4000:4000
+    env_file: 
+      - .env
     command: npm run dev
 
   server:
