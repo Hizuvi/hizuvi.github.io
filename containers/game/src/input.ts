@@ -7,7 +7,7 @@ export class MotionManager {
 
     /**
      * How much the device accelerated.
-     * Ranges from 0 to 20, being the acceleration in m/s * 10
+     * Ranges from 0 to 40, being the acceleration in m/s * 10
      */
     movement: number;
 
@@ -37,7 +37,7 @@ export class MotionManager {
 
         //Handle movement
         const movement = Math.abs(event.movementY) / window.innerHeight * 500;
-        const range = 20;
+        const range = 40;
         this.movement = Math.max(0, Math.min(range, movement));
     }
 
@@ -60,7 +60,7 @@ export class MotionManager {
         }
 
         //Format movement
-        const range = 20;
+        const range = 40;
         this.movement = Math.min(range, getSpeed(event.acceleration.x, event.acceleration.y, event.acceleration.z));
     }
 

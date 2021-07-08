@@ -11,8 +11,8 @@ demo_button.addEventListener("click", (e: Event) => {
 });
 
 function update(motionManager: MotionManager) {
-    textRot.innerText = motionManager.rotation.toString();
-    textMov.innerText = motionManager.movement.toString();
+    textRot.innerText = Math.round(motionManager.rotation).toString();
+    textMov.innerText = Math.round(motionManager.movement).toString();
 
     setTimeout(() => { update(motionManager); }, 16);
 }
