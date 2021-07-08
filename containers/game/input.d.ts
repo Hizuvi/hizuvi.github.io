@@ -1,7 +1,5 @@
 export declare class MotionManager {
-    alpha: number;
-    beta: number;
-    gamma: number;
+    rotation: number;
     constructor();
     handleOrientation(event: DeviceOrientationEvent): void;
 }
