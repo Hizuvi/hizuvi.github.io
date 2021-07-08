@@ -25,6 +25,6 @@ export class MotionManager {
         this.beta = event.beta;
         this.gamma = event.gamma;
 
-        document.getElementById("debugText").innerText = this.gamma.toString();
+        // document.getElementById("debugText").innerText = this.gamma.toString();
     }
 }
