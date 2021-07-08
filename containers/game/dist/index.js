@@ -16,7 +16,7 @@
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./input */ \"./src/input.ts\");\n\r\nlet motionManager;\r\nconst demo_button = document.getElementById(\"startButton\");\r\ndemo_button.addEventListener(\"click\", (e) => {\r\n    motionManager = new _input__WEBPACK_IMPORTED_MODULE_0__.MotionManager();\r\n});\r\n\n\n//# sourceURL=webpack://hizuvi.github.io/./src/index.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./input */ \"./src/input.ts\");\nconsole.log(\"Ver: 1\");\r\n\r\nlet motionManager;\r\nconst demo_button = document.getElementById(\"startButton\");\r\ndemo_button.addEventListener(\"click\", (e) => {\r\n    motionManager = new _input__WEBPACK_IMPORTED_MODULE_0__.MotionManager();\r\n});\r\n\n\n//# sourceURL=webpack://hizuvi.github.io/./src/index.ts?");
 
 /***/ }),
 
@@ -26,7 +26,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _inp
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"MotionManager\": () => (/* binding */ MotionManager)\n/* harmony export */ });\nclass MotionManager {\r\n    alpha;\r\n    beta;\r\n    gamma;\r\n    constructor() {\r\n        this.alpha = 0;\r\n        this.beta = 0;\r\n        this.gamma = 0;\r\n        if (!DeviceOrientationEvent) {\r\n            console.log(\"Not supported\");\r\n        }\r\n        if (DeviceMotionEvent &&\r\n            typeof DeviceMotionEvent.requestPermission === \"function\") {\r\n            DeviceMotionEvent.requestPermission();\r\n        }\r\n        window.addEventListener(\"deviceorientation\", this.handleOrientation);\r\n    }\r\n    handleOrientation(event) {\r\n        this.alpha = event.alpha;\r\n        this.beta = event.beta;\r\n        this.gamma = event.gamma;\r\n        document.getElementById(\"debugText\").innerText = \"Rotation: \" + Math.round(this.gamma).toString();\r\n    }\r\n}\r\n\n\n//# sourceURL=webpack://hizuvi.github.io/./src/input.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"MotionManager\": () => (/* binding */ MotionManager)\n/* harmony export */ });\nclass MotionManager {\r\n    alpha;\r\n    beta;\r\n    gamma;\r\n    constructor() {\r\n        this.alpha = 0;\r\n        this.beta = 0;\r\n        this.gamma = 0;\r\n        console.log(DeviceMotionEvent);\r\n        console.log(typeof DeviceMotionEvent.requestPermission);\r\n        if (DeviceMotionEvent &&\r\n            typeof DeviceMotionEvent.requestPermission === \"function\") {\r\n            DeviceMotionEvent.requestPermission();\r\n        }\r\n        window.addEventListener(\"deviceorientation\", this.handleOrientation);\r\n    }\r\n    handleOrientation(event) {\r\n        this.alpha = event.alpha;\r\n        this.beta = event.beta;\r\n        this.gamma = event.gamma;\r\n        document.getElementById(\"debugText\").innerText = \"Rotation: \" + Math.round(this.gamma).toString();\r\n    }\r\n}\r\n\n\n//# sourceURL=webpack://hizuvi.github.io/./src/input.ts?");
 
 /***/ })
 

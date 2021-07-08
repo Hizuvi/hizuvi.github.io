@@ -1,3 +1,5 @@
+console.log("Ver: 1");
+
 import { MotionManager } from "./input";
 
 let motionManager;

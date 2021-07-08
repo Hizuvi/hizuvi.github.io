@@ -8,9 +8,8 @@ export class MotionManager {
         this.beta = 0;
         this.gamma = 0;
 
-        if (!DeviceOrientationEvent) {
-            console.log("Not supported");
-        }
+        console.log(DeviceMotionEvent)
+        console.log(typeof DeviceMotionEvent.requestPermission)
 
         // Request permission for iOS 13+ devices
         if (
