@@ -8,6 +8,10 @@ export class MotionManager {
         this.beta = 0;
         this.gamma = 0;
 
+        if (!DeviceOrientationEvent) {
+            console.log("Not supported");
+        }
+
         // Request permission for iOS 13+ devices
         if (
             DeviceMotionEvent &&
@@ -25,6 +29,6 @@ export class MotionManager {
         this.beta = event.beta;
         this.gamma = event.gamma;
 
-        // document.getElementById("debugText").innerText = this.gamma.toString();
+        document.getElementById("debugText").innerText = "Rotation: " + Math.round(this.gamma).toString();
     }
 }
