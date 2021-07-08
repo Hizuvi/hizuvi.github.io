@@ -22,12 +22,16 @@ export class MotionManager {
         //   window.addEventListener("devicemotion", handleMotion);
         window.addEventListener("deviceorientation", this.handleOrientation);
     }
-    
+
     handleOrientation(event: DeviceOrientationEvent) {
         this.alpha = event.alpha;
         this.beta = event.beta;
         this.gamma = event.gamma;
 
-        document.getElementById("debugText").innerText = "Rotation: " + Math.round(this.gamma).toString();
+        // document.getElementById("debugText").innerText = "Rotation: " + Math.round(this.gamma).toString();
+        document.getElementById("debugText").innerText =
+            "MotionEvent: " + (typeof DeviceMotionEvent) +
+            "RequestPerm: " + (typeof DeviceMotionEvent.requestPermission) +
+            "Gamma: " + this.gamma.toString();
     }
 }
