@@ -1,36 +1,30 @@
-const debug_text = document.getElementById("debugText") as HTMLParagraphElement;
-const demo_button = document.getElementById("startButton") as HTMLButtonElement;
+export class MotionManager {
+    alpha: number;
+    beta: number;
+    gamma: number;
 
-let is_running = false;
+    constructor() {
+        this.alpha = 0;
+        this.beta = 0;
+        this.gamma = 0;
 
-function handleOrientation(event: DeviceOrientationEvent){
-    debug_text.innerText = event.gamma.toString();
+        // Request permission for iOS 13+ devices
+        if (
+            DeviceMotionEvent &&
+            typeof DeviceMotionEvent.requestPermission === "function"
+        ) {
+            DeviceMotionEvent.requestPermission();
+        }
+
+        //   window.addEventListener("devicemotion", handleMotion);
+        window.addEventListener("deviceorientation", this.handleOrientation);
+    }
+    
+    handleOrientation(event: DeviceOrientationEvent) {
+        this.alpha = event.alpha;
+        this.beta = event.beta;
+        this.gamma = event.gamma;
+
+        document.getElementById("debugText").innerText = this.gamma.toString();
+    }
 }
-
-demo_button.onclick = function(e) {
-    e.preventDefault();
-    
-    // Request permission for iOS 13+ devices
-    if (
-      DeviceMotionEvent &&
-      typeof DeviceMotionEvent.requestPermission === "function"
-    ) {
-      DeviceMotionEvent.requestPermission();
-    }
-    
-    if (is_running){
-    //   window.removeEventListener("devicemotion", handleMotion);
-      window.removeEventListener("deviceorientation", handleOrientation);
-      demo_button.innerHTML = "Start demo";
-      demo_button.classList.add('btn-success');
-      demo_button.classList.remove('btn-danger');
-      is_running = false;
-    }else{
-    //   window.addEventListener("devicemotion", handleMotion);
-      window.addEventListener("deviceorientation", handleOrientation);
-      document.getElementById("start_demo").innerHTML = "Stop demo";
-      demo_button.classList.remove('btn-success');
-      demo_button.classList.add('btn-danger');
-      is_running = true;
-    }
-  };
