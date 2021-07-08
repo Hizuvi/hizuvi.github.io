@@ -1,4 +1,4 @@
-console.log("Ver: 3");
+console.log("Ver: 4");
 
 import { MotionManager } from "./input";
 
@@ -8,5 +8,4 @@ const demo_button = document.getElementById("startButton");
 demo_button.addEventListener("click", (e: Event) => {
     motionManager = new MotionManager();
 });
-
 
