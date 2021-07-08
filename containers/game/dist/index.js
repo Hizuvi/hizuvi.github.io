@@ -16,7 +16,7 @@
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./input */ \"./src/input.ts\");\nconsole.log(\"Ver: 2\");\r\n\r\nlet motionManager;\r\nconst demo_button = document.getElementById(\"startButton\");\r\ndemo_button.addEventListener(\"click\", (e) => {\r\n    motionManager = new _input__WEBPACK_IMPORTED_MODULE_0__.MotionManager();\r\n});\r\n\n\n//# sourceURL=webpack://hizuvi.github.io/./src/index.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./input */ \"./src/input.ts\");\nconsole.log(\"Ver: 3\");\r\n\r\nlet motionManager;\r\nconst demo_button = document.getElementById(\"startButton\");\r\ndemo_button.addEventListener(\"click\", (e) => {\r\n    motionManager = new _input__WEBPACK_IMPORTED_MODULE_0__.MotionManager();\r\n});\r\n\n\n//# sourceURL=webpack://hizuvi.github.io/./src/index.ts?");
 
 /***/ }),
 
