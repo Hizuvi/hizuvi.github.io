@@ -1,20 +1,19 @@
 export class MotionManager {
     /**
-     * How the device is turned
+     * How the device is turned.
+     * Ranges from -30 to 30, being the amount the device is tilted right
      */
     rotation: number;
 
     /**
-     * How much the device accelerated
+     * How much the device accelerated.
+     * Ranges from -20 to 20, being the acceleration in m/s * 10
      */
     movement: number;
 
     constructor() {
         this.rotation = 0;
         this.movement = 0;
-
-        console.log(typeof DeviceMotionEvent)
-        console.log(typeof DeviceMotionEvent.requestPermission)
 
         //Check for support
         if (!DeviceMotionEvent) {
@@ -47,8 +46,9 @@ export class MotionManager {
             throw Error("Unsupported");
         }
 
-        //Calculate the speed the device is moving at
-        this.movement = getSpeed(event.acceleration.x, event.acceleration.y, event.acceleration.z);
+        //Format movement
+        const range = 20;
+        this.movement = Math.max(-range, Math.min(range, getSpeed(event.acceleration.x, event.acceleration.y, event.acceleration.z)));
 
         document.getElementById("debugText").innerText = "Motion: " + Math.round(this.movement).toString();
     }
@@ -66,5 +66,5 @@ function getRotation(alpha: number, beta: number, gamma: number): number {
 }
 
 function getSpeed(alpha: number, beta: number, gamma: number) {
-    return Math.sqrt(alpha * alpha + beta * beta + gamma * gamma);
+    return Math.sqrt(alpha * alpha + beta * beta + gamma * gamma) * 10;
 }
