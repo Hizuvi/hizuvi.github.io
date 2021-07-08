@@ -1,4 +1,4 @@
-console.log("Ver: 1");
+console.log("Ver: 2");
 
 import { MotionManager } from "./input";
 
