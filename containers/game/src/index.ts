@@ -1,28 +1,29 @@
-import { Engine } from "@babylonjs/core/Engines/engine";
-import { Scene } from "@babylonjs/core/scene";
-import { ArcRotateCamera } from "@babylonjs/core/Cameras";
-import { Vector3 } from "@babylonjs/core/Maths/math";
-import { HemisphericLight } from "@babylonjs/core/Lights"
-import { Mesh, MeshBuilder } from "@babylonjs/core/Meshes";
+console.log("Ver: 6");
+import { MotionManager } from "./modules/input";
 
-var canvas: any = document.getElementById("renderCanvas");
-var engine: Engine = new Engine(canvas, true);
+const demo_button = document.getElementById("startButton");
+const textRot = document.getElementById("rot");
+const textMov = document.getElementById("mov");
+const textMovRaw = document.getElementById("raw");
+demo_button.addEventListener("click", (e: Event) => {
+    const motionManager = new MotionManager();
 
-function createScene(): Scene {
-    var scene: Scene = new Scene(engine);
+    update(motionManager);
+});
 
-    var camera: ArcRotateCamera = new ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 2, 2, Vector3.Zero(), scene);
-    camera.attachControl(canvas, true);
+let smoothed = 0;
 
-    var light1: HemisphericLight = new HemisphericLight("light1", new Vector3(1, 1, 0), scene);
+function update(motionManager: MotionManager) {
+    textRot.innerText = Math.round(motionManager.rotation).toString();
+    textMovRaw.innerText = Math.round(motionManager.movement).toString();
 
-    var sphere: Mesh = MeshBuilder.CreateSphere("sphere", { diameter: 1 }, scene);
+    smoothed = lerp(smoothed, motionManager.movement, 0.2);
 
-    return scene;
+    textMov.innerText = Math.round(smoothed).toString();
+
+    setTimeout(() => { update(motionManager); }, 16);
 }
 
-var scene: Scene = createScene();
-
-engine.runRenderLoop(() => {
-    scene.render();
-});
+function lerp(start: number, end: number, amt: number) {
+    return (1 - amt) * start + amt * end
+}
