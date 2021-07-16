@@ -18,7 +18,6 @@ export class MotionManager {
 
     setupMouse = () => {
         if (this.usingMouse) return;
-        console.log("Using mouse");
 
         window.removeEventListener("deviceorientation", this.handleOrientation);
         window.removeEventListener("devicemotion", this.handleMotion);
@@ -77,7 +76,6 @@ export class MotionManager {
 
         //Check if permission is needed
         if (typeof DeviceMotionEvent.requestPermission === "function") {
-            console.log("Requesting permission");
             DeviceMotionEvent.requestPermission();
         }
 
