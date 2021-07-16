@@ -1,5 +1,7 @@
 console.log("Ver: 6");
+
 import { MotionManager } from "./modules/input";
+
 
 const demo_button = document.getElementById("startButton");
 const textRot = document.getElementById("rot");
