@@ -5,13 +5,16 @@ import { HemisphericLight } from "@babylonjs/core/Lights"
 import { MeshBuilder } from "@babylonjs/core/Meshes";
 import { Engine, LerpBlock, Sound, StandardMaterial, Tools } from "@babylonjs/core";
 import { MotionManager } from "../modules/input";
+// import { ReadFile } from "../modules/level-loader";
 
 export default function (engine: Engine): Scene {
     //Initialize scene
     var scene: Scene = new Scene(engine);
 
-    //Load song
-    const song = new Sound("Gunshot", "../content/stay-here-forever.mp3", scene, finished, {
+    //Load level
+    // const levelData = ReadFile("../content/levels/test/data.json");
+
+    const song = new Sound("Song", "../content/levels/test/stay-here-forever.mp3", scene, finished, {
         autoplay: false
     });
 
@@ -37,11 +40,12 @@ export default function (engine: Engine): Scene {
     camera.fov = 1;
 
     //Motion manager
-    const motionManager = new MotionManager();
 
     //Start running the level
     function finished() {
         //Start song
+        const motionManager = new MotionManager();
+
         song.play();
 
         var lastTime = 0;

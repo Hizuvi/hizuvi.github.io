@@ -1,0 +1,10 @@
+{
+"url": "../content/levels/test/stay-here-forever.mp3",
+"bpm": 140,
+"creator": "string",
+"artist": "string",
+"offset": "number",
+"styling": {},
+
+"track": {}
+}
