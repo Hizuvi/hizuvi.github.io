@@ -4,6 +4,7 @@ import { Color3, Vector3 } from "@babylonjs/core/Maths/math";
 import { HemisphericLight } from "@babylonjs/core/Lights"
 import { MeshBuilder } from "@babylonjs/core/Meshes";
 import { Engine, Sound, StandardMaterial, Tools } from "@babylonjs/core";
+import { MotionManager } from "../modules/input";
 
 export default function (engine: Engine): Scene {
     //Initialize scene
@@ -14,7 +15,6 @@ export default function (engine: Engine): Scene {
         autoplay: false
     });
 
-    //Add level
     //Ground
     const groundMat = new StandardMaterial("groundMat", scene);
     groundMat.diffuseColor = new Color3(0, .4, 0);
@@ -36,6 +36,9 @@ export default function (engine: Engine): Scene {
     camera.rotation = new Vector3(Tools.ToRadians(30), 0, 0);
     camera.fov = 1;
 
+    //Motion manager
+    const motionManager = new MotionManager();
+
     //Start running the level
     function finished() {
         //Start song
@@ -44,8 +47,17 @@ export default function (engine: Engine): Scene {
         var lastTime = 0;
         //Before every frame print song time
         scene.onBeforeRenderObservable.add((scene, event) => {
+            //Set delta time
+            const deltaTime = song.currentTime - lastTime;
             lastTime = song.currentTime;
-            
+
+            //Handle player movement
+            const tilt = motionManager.rotation;
+            const speed = 1.5 / 10;
+            const range = 1;
+
+            player.position.x += tilt * speed * deltaTime;
+            player.position.x = Math.max(Math.min(player.position.x, range), -range)
         });
     }
 
