@@ -24,6 +24,7 @@
     "webpack-cli": "^4.7.2"
   },
   "dependencies": {
-    "@babylonjs/core": "^4.2.0"
+    "@babylonjs/core": "^4.2.0",
+    "@babylonjs/gui": "^4.2.0"
   }
 }

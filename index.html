@@ -1,6 +1,51 @@
 <!DOCTYPE html>
 <html>
-    <body>
-        <a href="containers/game/dist/index.html">Go to game</a>
-    </body>
+
+<body>
+    <p>12</p>
+    <script>
+        function getPerm() {
+            console.log("perms");
+
+            // //Check if permission is needed
+            // DeviceMotionEvent.requestPermission = async function () {
+            //     await setTimeout(null, 2000);
+
+            //     DeviceMotionEvent.getPerm = function () { return true }
+
+            //     return Promise.resolve();
+            // }
+
+            if (typeof DeviceMotionEvent.requestPermission === "function") {
+                DeviceMotionEvent.requestPermission().then(() => {
+                    const link = document.getElementById("link");
+                        link.innerText = "Go to game with perms!";
+
+                    // if (DeviceMotionEvent.getPerm()) {
+                    //     const link = document.getElementById("link");
+                    //     link.innerText = "Go to game!";
+                    // } else {
+                    //     const link = document.getElementById("link");
+                    //     link.innerText = "Access to device motion and tilt seems to be denied. Please restart the browser and retry."
+                    // }
+                });
+            }
+            else {
+                const link = document.getElementById("link")
+                link.innerText = "Go to game!";
+            }
+
+            // const link = document.getElementById("link");
+            
+            // if(!link.innerText){
+            //     link.innerText = "I'm angry"
+            // }
+        }
+    </script>
+
+    <button type="button" onclick="getPerm()">Give permission</button>
+    <a id="link" href="containers/game/dist/index.html"></a>
+    <!-- <p id="text"></p> -->
+</body>
+
 </html>

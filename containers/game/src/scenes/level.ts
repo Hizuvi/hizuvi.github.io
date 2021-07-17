@@ -3,8 +3,9 @@ import { FreeCamera } from "@babylonjs/core/Cameras";
 import { Color3, Vector3 } from "@babylonjs/core/Maths/math";
 import { HemisphericLight } from "@babylonjs/core/Lights"
 import { MeshBuilder } from "@babylonjs/core/Meshes";
-import { Engine, LerpBlock, Sound, StandardMaterial, Tools } from "@babylonjs/core";
+import { ActionManager, Engine, ExecuteCodeAction, Sound, StandardMaterial, Tools, VideoTexture } from "@babylonjs/core";
 import { MotionManager } from "../modules/input";
+import { AdvancedDynamicTexture, Button } from "@babylonjs/gui";
 // import { ReadFile } from "../modules/level-loader";
 
 export default function (engine: Engine): Scene {
@@ -14,6 +15,7 @@ export default function (engine: Engine): Scene {
     //Load level
     // const levelData = ReadFile("../content/levels/test/data.json");
 
+    //Load song
     const song = new Sound("Song", "../content/levels/test/stay-here-forever.mp3", scene, finished, {
         autoplay: false
     });
@@ -35,14 +37,33 @@ export default function (engine: Engine): Scene {
     const ambient = new HemisphericLight("ambient", new Vector3(0, 1, 1), scene);
 
     //Camera
-    var camera = new FreeCamera("Camera", new Vector3(0, 3.5, -10), scene);
+    const camera = new FreeCamera("Camera", new Vector3(0, 3.5, -10), scene);
     camera.rotation = new Vector3(Tools.ToRadians(30), 0, 0);
     camera.fov = 1;
 
-    //Motion manager
+    //UI
+    const adt = AdvancedDynamicTexture.CreateFullscreenUI("UI");
+
+    const button = Button.CreateSimpleButton(
+        "startButton",
+        "Start level"
+    );
+    button.width = 0.2;
+    button.height = "40px";
+    button.color = "white";
+    button.background = "green";
+
+    button.onPointerClickObservable.add(start);
 
     //Start running the level
     function finished() {
+        adt.addControl(button);
+    }
+
+    function start() {
+        //Hide start button
+        adt.removeControl(button);
+
         //Start song
         const motionManager = new MotionManager();
 
@@ -53,7 +74,7 @@ export default function (engine: Engine): Scene {
         //Player
         var lastVelocity = 0;
 
-        //Before every frame print song time
+        //Check if the song is playing
         scene.onBeforeRenderObservable.add((scene, event) => {
             //Set delta time
             const deltaTime = song.currentTime - lastTime;
