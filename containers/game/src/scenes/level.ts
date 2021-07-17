@@ -3,7 +3,7 @@ import { FreeCamera } from "@babylonjs/core/Cameras";
 import { Color3, Vector3 } from "@babylonjs/core/Maths/math";
 import { HemisphericLight } from "@babylonjs/core/Lights"
 import { MeshBuilder } from "@babylonjs/core/Meshes";
-import { Engine, Sound, StandardMaterial, Tools } from "@babylonjs/core";
+import { Engine, LerpBlock, Sound, StandardMaterial, Tools } from "@babylonjs/core";
 import { MotionManager } from "../modules/input";
 
 export default function (engine: Engine): Scene {
@@ -45,6 +45,10 @@ export default function (engine: Engine): Scene {
         song.play();
 
         var lastTime = 0;
+
+        //Player
+        var lastVelocity = 0;
+
         //Before every frame print song time
         scene.onBeforeRenderObservable.add((scene, event) => {
             //Set delta time
@@ -55,11 +59,22 @@ export default function (engine: Engine): Scene {
             const tilt = motionManager.rotation;
             const speed = 1.5 / 10;
             const range = 1;
+            const smoothing = 0.8;
+            const deadZone = 2; //Should probably be exposed to player
 
-            player.position.x += tilt * speed * deltaTime;
+            const velocity = (tilt > 3 || tilt < -3) ? tilt * speed * deltaTime : 0;
+            const smoothed = lerp(lastVelocity, velocity, 1 - smoothing)
+            player.position.x += smoothed;
+            lastVelocity = smoothed;
+
             player.position.x = Math.max(Math.min(player.position.x, range), -range)
         });
     }
 
     return scene;
+}
+
+
+function lerp(start: number, end: number, amt: number) {
+    return (1 - amt) * start + amt * end
 }
