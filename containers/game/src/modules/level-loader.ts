@@ -1,10 +1,12 @@
 //Take in a url to the file, return the level as an object
-export interface ILevel {
+export interface ILevelFile {
     songUrl: string,
     bpm: number,
+    /**The movement speed forwards in units per second*/
+    speed: number,
     creator: string,
     artist: string,
-    /**Offset for the beats in ms */
+    /**Offset in seconds for beat syncing*/
     offset: number,
 
     /**For future use */
@@ -14,13 +16,20 @@ export interface ILevel {
      * Is filled with keys, which correspond to what beat the element should be on in 16ths
      * Each beat is an array of an element followed by any extra data that element needs
      * @example
-     * track: { 12: [1, 2]}
+     * track:[[0, [[1, 2], [4, 1]]]]
     */
-    track: {}
+    track: [number, number[][]][]
 }
 
-// export function ReadFile(url: string): ILevel{
-//     const file = 
+export enum Element {
+    lineStart,
+    linePoint,
+    lineEnd,
+    jump
+}
 
-//     return JSON.parse()
-// }
+export async function ReadFile(url: string): Promise<ILevelFile>{
+    const file = await fetch(url);
+    const json = await file.json();
+    return json;
+}

@@ -1,11 +1,8 @@
 import { Scene } from "@babylonjs/core/scene";
 import { FreeCamera } from "@babylonjs/core/Cameras";
 import { Color3, Vector3 } from "@babylonjs/core/Maths/math";
-import { HemisphericLight } from "@babylonjs/core/Lights"
 import { MeshBuilder } from "@babylonjs/core/Meshes";
-import { ActionManager, Engine, ExecuteCodeAction, Sound, StandardMaterial, Tools, VideoTexture } from "@babylonjs/core";
-import { MotionManager } from "../modules/input";
-import { AdvancedDynamicTexture, Button } from "@babylonjs/gui";
+import { ActionManager, Engine, ExecuteCodeAction, Sound, StandardMaterial, VideoTexture } from "@babylonjs/core";
 // import { ReadFile } from "../modules/level-loader";
 
 export default function (engine: Engine, startLevel: CallableFunction): Scene {

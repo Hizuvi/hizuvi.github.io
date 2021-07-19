@@ -1,5 +1,4 @@
 import { Engine } from "@babylonjs/core/Engines/engine";
-import { Scene } from "@babylonjs/core/scene";
 import createStartup from "./scenes/startup";
 import createLevel from "./scenes/level";
 
