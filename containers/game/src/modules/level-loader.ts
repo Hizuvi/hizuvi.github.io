@@ -14,21 +14,31 @@ export interface ILevelFile {
 
     /**Track data 
      * Is filled with keys, which correspond to what beat the element should be on in 16ths
-     * Each beat is an array of an element followed by any extra data that element needs
+     * Each beat is an array of an elements and the elements data
      * @example
-     * track:[[0, [[1, 2], [4, 1]]]]
+     * track:[[0, [[1, [10, 10, 31], [10]], [4, 1]]]]
     */
-    track: [number, number[][]][]
+    track: [number, TElement[]][]
 }
 
-export enum Element {
-    lineStart,
-    linePoint,
-    lineEnd,
+type TElement = [number, unknown[]]
+
+export enum EElement {
+    line,
     jump
 }
 
-export async function ReadFile(url: string): Promise<ILevelFile>{
+/**
+ * [The beat the point is at(offset from the first beat), The lane the point is at, How smoothed the line is to next point]  
+ */
+type TLinePoint = [number, 0 | 1 | 2, number];
+
+/**
+ * A line
+ */
+export type TLine = TLinePoint[];
+
+export async function ReadFile(url: string): Promise<ILevelFile> {
     const file = await fetch(url);
     const json = await file.json();
     return json;

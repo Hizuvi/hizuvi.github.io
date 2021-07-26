@@ -6,113 +6,12 @@ import { Mesh, MeshBuilder } from "@babylonjs/core/Meshes";
 import { Engine, Sound, StandardMaterial, Tools } from "@babylonjs/core";
 import { MotionManager } from "../modules/input";
 import { AdvancedDynamicTexture, Button } from "@babylonjs/gui";
-import { Element, ILevelFile, ReadFile } from "../modules/level-loader";
-
-interface ILevel {
-    song: Sound;
-    track: Mesh;
-    speed: number;
-}
+import { EElement, ILevelFile, ReadFile } from "../modules/level-loader";
+import { generateLevel, ILevel } from "../modules/level-builder";
 
 export default function (engine: Engine): Scene {
     //Initialize scene
     var scene: Scene = new Scene(engine);
-
-    //Generate level
-    async function generateLevel(scene: Scene, levelFile: ILevelFile, doneCB: CallableFunction) {
-        console.log("Generating level!");
-
-        //Load song
-        const song = new Sound("Song", levelFile.songUrl, scene, null, {
-            autoplay: false
-        });
-
-        //The track container
-        const trackMat = new StandardMaterial("trackMat", scene);
-        trackMat.alpha = 0;
-
-        const track = MeshBuilder.CreateBox("track", { size: 1 }, scene);
-        track.position.y = 0;
-        track.material = trackMat;
-
-        //Materials
-        const startLineMat = new StandardMaterial("startLineMat", scene);
-        startLineMat.diffuseColor = new Color3(0, 0.5, 0);
-
-        const midLineMat = new StandardMaterial("midLineMat", scene);
-        midLineMat.diffuseColor = new Color3(0, .5, .5);
-
-        const endLineMat = new StandardMaterial("endLineMat", scene);
-        endLineMat.diffuseColor = new Color3(0.5, 0, 0);
-
-        //Generate the elements of the level
-        var lastLane: number; //For ending lines
-        for (const step of levelFile.track) {
-            const beat = step[0];
-            const offset = levelFile.offset * levelFile.speed;
-            const position = (beat / 4) * (60 / levelFile.bpm) * levelFile.speed + offset;
-
-            for (const element of step[1]) {
-                console.log(element);
-
-                //Figure out which element to create
-                switch (element[0]) {
-                    case Element.lineStart:
-                        //Create a line start
-                        const lineStart = MeshBuilder.CreateBox("line", { depth: 0.1 }, scene);
-                        lineStart.position = new Vector3(-1 + element[1], 0, position);
-                        lineStart.parent = track;
-                        lineStart.material = startLineMat;
-                        // lineStart.parent = track;
-
-                        lastLane = element[1];
-                        break;
-
-                    case Element.linePoint:
-                        const linePoint = MeshBuilder.CreateBox("line", { depth: 0.1 }, scene);
-                        linePoint.position = new Vector3(-1 + element[1], 0, position);
-                        linePoint.parent = track;
-                        linePoint.material = midLineMat;
-                        // linePoint.parent = track;
-
-                        lastLane = element[1];
-                        break;
-
-                    case Element.lineEnd:
-                        const lineEnd = MeshBuilder.CreateBox("line", { depth: 0.1 }, scene);
-                        lineEnd.position = new Vector3(-1 + lastLane, 0, position);
-                        lineEnd.parent = track;
-                        lineEnd.material = endLineMat;
-                        // lineEnd.parent = track;
-                        break;
-                }
-            }
-        }
-
-        // Check that all elements have been loaded
-        var loading = true;
-        while (loading) {
-            loading = false;
-
-            if (!song.isReady()) {
-                loading = true;
-            }
-
-            function wait(milliseconds: number) {
-                return new Promise(resolve => setTimeout(resolve, milliseconds));
-            }
-
-            console.log("waiting");
-            await wait(500);
-        }
-
-        const level: ILevel = {
-            song,
-            track,
-            speed: levelFile.speed
-        };
-        doneCB(level);
-    }
 
     //Load the level
     var generationFinished = false;

@@ -6,12 +6,14 @@ export interface ILevelFile {
     artist: string;
     offset: number;
     styling: {};
-    track: [number, number[][]][];
+    track: [number, TElement[]][];
 }
-export declare enum Element {
-    lineStart = 0,
-    linePoint = 1,
-    lineEnd = 2,
-    jump = 3
+declare type TElement = [number, unknown[]];
+export declare enum EElement {
+    line = 0,
+    jump = 1
 }
+declare type TLinePoint = [number, 0 | 1 | 2, number];
+export declare type TLine = TLinePoint[];
 export declare function ReadFile(url: string): Promise<ILevelFile>;
+export {};
